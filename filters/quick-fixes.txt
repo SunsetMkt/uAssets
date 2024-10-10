@@ -51,10 +51,13 @@ www.youtube.com##+js(set, yt.config_.EXPERIMENT_FLAGS.web_bind_fetch, false)
 ||www.youtube-nocookie.com/youtubei/v1/player?$xhr,1p,replace=/"adSlots.*?\}\}\]\,"adBreakHeartbeatParams/"adBreakHeartbeatParams/
 
 ! https://github.com/uBlockOrigin/uAssets/issues/3367#issuecomment-2307514494
+web.facebook.com,www.facebook.com##+js(json-prune, require.0.3.0.__bbox.require.[].3.1.__bbox.result.data, require.0.3.0.__bbox.require.[].3.1.__bbox.result.data.node.sponsored_data.id_for_advertisement)
 !#if cap_html_filtering
 ||facebook.com/api/graphql/$xhr,replace=/null,"category_sensitive"[^\n]+?,"__typename":"SponsoredData"[^\n]+"cursor":"[^"]+"\}/null}/g,domain=web.facebook.com|www.facebook.com
+||facebook.com^$doc,replace=/null,"category_sensitive"[^\n]+?,"__typename":"SponsoredData"[^\n]+"cursor":"[^"]+"\}/null}/g,to=web.facebook.com|www.facebook.com
 !#else
 web.facebook.com,www.facebook.com##+js(trusted-replace-xhr-response, '/null,"category_sensitive"[^\n]+?,"__typename":"SponsoredData"[^\n]+"cursor":"[^"]+"\}/g', null}, /api/graphql)
+web.facebook.com,www.facebook.com##+js(rpnt, script, '/null,"category_sensitive"[^\n]+?,"__typename":"SponsoredData"[^\n]+"cursor":"[^"]+"\}/g', null})
 !#endif
 
 ! https://github.com/uBlockOrigin/uAssets/issues/18476
@@ -98,8 +101,9 @@ japscan.lol#@#+js(aeld, DOMContentLoaded, /^[-$0-9A-Z_a-z]+=>\{var .{400\,500}\)
 japscan.lol#@#+js(aeld, DOMContentLoaded, /^[-$0-9A-Z_a-z]+=>\{[a-z]{3\,5} .{400\,500}\);\}$/)
 japscan.lol##+js(aeld, DOMContentLoaded, (e)=>)
 japscan.lol#@#+js(rmnt, script, =document[\'createElement\'](\'img\');)
-japscan.lol##+js(acs, document.querySelectorAll, ('img)
-japscan.lol##+js(rmnt, script, un'+'de)
+japscan.lol#@#+js(rmnt, script, un\'+\'de)
+japscan.lol#@#+js(acs, document.querySelectorAll, (\'img)
+japscan.lol##+js(rmnt, script, ;}else{if(typeof )
 /^https?:\/\/[-a-z]{8,15}\.(?:com|net)\/401\/\d{7}(?:\?v=\d+)?$/$script,3p,domain=japscan.lol,important
 /^https?:\/\/[a-z]{8,15}\.xyz\/$/$xhr,3p,to=xyz,method=head,header=x-traceid2,domain=japscan.lol,important
 /^https?:\/\/[a-z]{8,15}\.com\/$/$xhr,3p,to=com,method=head,header=x-traceid2,domain=japscan.lol,important
@@ -142,7 +146,7 @@ poophq.com,veev.to##+js(set, fapit.check, noopFunc)
 !poophq.com,veev.to##+js(no-xhr-if, url:!/cdn\.plyr\.io|veev\.to|\/dl\?op=player_api/ method:GET)
 poophq.com,veev.to##+js(no-xhr-if, /vast.php?)
 poophq.com,veev.to##+js(no-xhr-if, adsbygoogle, length:35000-55000)
-poophq.com,veev.to##+js(no-xhr-if, /\/ad-provider\.js$/, length:35000-40000)
+poophq.com,veev.to##+js(trusted-set, __abburim, {"value": "import"})
 poophq.com,veev.to##+js(no-xhr-if, /\/preroll\.engine$/)
 *$script,3p,domain=poophq.com|veev.to,redirect-rule=noopjs
 *$other,3p,denyallow=veevcdn.co,domain=poophq.com|veev.to
@@ -199,6 +203,7 @@ gunauc.net#@#+js(prevent-fetch, pagead2.googlesyndication.com)
 wiki.yjsnpi.nu#@#.ad:style(height: 0 !important;)
 @@||wiki.yjsnpi.nu^$image,xhr,1p
 @@||wiki.yjsnpi.nu^$ghide
+wiki.yjsnpi.nu##.mw-file-element, .lazy-image-placeholder:style(visibility: visible !important;)
 
 ! https://github.com/AdguardTeam/AdguardFilters/commit/2ff33624c53737968a93974c6568c17e8d9f3a3d#commitcomment-147572799
 adacomi.com#@#body > div[style^="text-align:center;"]
@@ -215,3 +220,6 @@ kahoku.news#@#.vr2_pickup-main
 yahoo.com#@#+js(set, rapidInstance, {})
 yahoo.com#@#+js(set, rapidInstance.beaconLinkViews, noopFunc)
 yahoo.com#@#+js(set, rapidInstance.beaconClick, noopFunc)
+
+! https://github.com/uBlockOrigin/uAssets/issues/21578#issuecomment-2404243121
+iwb.jp##+js(nostif, getComputedStyle(a).height)
